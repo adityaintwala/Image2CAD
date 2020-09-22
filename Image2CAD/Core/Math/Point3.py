@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 22 09:33:42 2020
 
 @author: Aditya Intwala
 """
 
 
-from math import fabs
+from math import fabs, sqrt
+from Math.Point2 import Point2
 from Math.Vector3 import Vector3
 from Math.Constants import Constants
 
@@ -41,57 +41,52 @@ class Point3:
     def __mul__ (self, scalar):
         return Point3((self.x * scalar),(self.y * scalar), (self.z * scalar))
 
-    # def DistanceTo(self, other):
-    #     d = sqrt(((self.x - other.x) * (self.x - other.x)) + ((self.y - other.y) * (self.y - other.y)) + ((self.z - other.z) * (self.z - other.z)))
-    #     return d
+    def DistanceTo(self, other):
+        d = sqrt(((self.x - other.x) * (self.x - other.x)) + ((self.y - other.y) * (self.y - other.y)) + ((self.z - other.z) * (self.z - other.z)))
+        return d
 
-    # @staticmethod    
-    # def Centroid(Points):
+    @staticmethod    
+    def Centroid(Points):
         
-    #     totalX = 0
-    #     totalY = 0
-    #     totalZ = 0
-    #     if (len(Points) == 0):
-    #         print ('List is Empty')
-    #     for i in Points:
-    #         totalX += i.x
-    #         totalY += i.y
-    #         totalZ += i.z
-    #     return Point3(totalX/(len(Points)), totalY/(len(Points)), totalZ/(len(Points)))
+        totalX = 0
+        totalY = 0
+        totalZ = 0
+        for i in Points:
+            totalX += i.x
+            totalY += i.y
+            totalZ += i.z
+        return Point3(totalX/(len(Points)), totalY/(len(Points)), totalZ/(len(Points)))
 
-    # @staticmethod
-    # def CalculateNormal (first, second, third):
-    #     v1 = Vector3( second.x - first.x, second.y - first.y, second.z - first.z)
-    #     v2 = Vector3( third.x - second.x, third.y - second.y, third.z - second.z)
-    #     normal = v1.Cross(v2)
-    #     normal.Normalize()
-    #     return normal
+    @staticmethod
+    def CalculateNormal (first, second, third):
+        v1 = Vector3( second.x - first.x, second.y - first.y, second.z - first.z)
+        v2 = Vector3( third.x - second.x, third.y - second.y, third.z - second.z)
+        normal = v1.Cross(v2)
+        normal.Normalize()
+        return normal
 
-    # @staticmethod
-    # def AreCollinear(first, second, third):
-    #     if (first == second or first == third or second == third):
-    #         print('Points are Collinear')
-    #         return True
+    @staticmethod
+    def AreCollinear(first, second, third):
+        if (first == second or first == third or second == third):
+            return True
         
-    #     v1 = Vector3(first.x - second.x, first.y - second.y, first.z - second.z)
-    #     v2 = Vector3(first.x - third.x, first.y - third.y, first.z - third.z)
-    #     angle = Vector3.AngleDeg(v1,v2)
+        v1 = Vector3(first.x - second.x, first.y - second.y, first.z - second.z)
+        v2 = Vector3(first.x - third.x, first.y - third.y, first.z - third.z)
+        angle = Vector3.AngleDeg(v1,v2)
        
-    #     if ((fabs(angle) < MathDefaults.Tolerance) or (fabs(angle - 180) < MathDefaults.Tolerance)):
-    #         print ('Points are Collinear')
-    #         return True
-    #     print ('Points are not Collinear')
-    #     return False
+        if ((fabs(angle) < Constants.PRECISION) or (fabs(angle - 180) < Constants.PRECISION)):
+            return True
+        return False
     
-    # def ToPoint2(self):
-    #     return Point2(self.x , self.y)
+    def ToPoint2(self):
+        return Point2(self.x , self.y)
 
-    # @staticmethod
-    # def Project(point, planePt, planeNorm):
-    #     planeNormal = planeNorm.Normalize()
-    #     v = point - planePt
-    #     dot = v.Dot(planeNormal)
-    #     dv = planeNormal * dot
-    #     return Point3(point.x - dv.i, point.y - dv.j, point.z - dv.k)
+    @staticmethod
+    def Project(point, planePt, planeNorm):
+        planeNormal = planeNorm.Normalize()
+        v = point - planePt
+        dot = v.Dot(planeNormal)
+        dv = planeNormal * dot
+        return Point3(point.x - dv.i, point.y - dv.j, point.z - dv.k)
 
 

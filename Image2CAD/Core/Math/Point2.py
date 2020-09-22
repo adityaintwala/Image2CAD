@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 22 09:33:27 2020
 
 @author: Aditya Intwala
 """
 
-from math import fabs
+from math import fabs, sqrt
+from Math.Point3 import Point3
 from Math.Vector2 import Vector2
+from Math.Vector3 import Vector3
 from Math.Constants import Constants
 
 class Point2:
@@ -50,47 +51,39 @@ class Point2:
         return Point2((self.x * scalar),(self.y * scalar))
         
 
-    # def DistanceTo(self, other):
-    #     d= sqrt(((self.x - other.x) * (self.x - other.x)) + ((self.y - other.y) * (self.y - other.y)))
-    #     return d
-    
-    
+    def DistanceTo(self, other):
+        d= sqrt(((self.x - other.x) * (self.x - other.x)) + ((self.y - other.y) * (self.y - other.y)))
+        return d
 
-    # @staticmethod
-    # def Centroid(points):
-    #     totalX = 0
-    #     totalY =0
-    #     if (len(points) == 0):
-    #         print ('List is Empty')
-    #     for i in points:
-    #         totalX += i.x
-    #         totalY += i.y
-    #     return Point2(totalX/(len(points)),totalY/(len(points)))
+    @staticmethod
+    def Centroid(points):
+        totalX = 0
+        totalY =0
+        for i in points:
+            totalX += i.x
+            totalY += i.y
+        return Point2(totalX/(len(points)),totalY/(len(points)))
 
-    # @staticmethod
-    # def CalculateNormal (first, second, third):
-    #     v1 = Vector3.Vector3( second.x - first.x, second.y - first.y, 0)
-    #     normal = Vector3.Vector3(v1.y, -v1.x, 0)
-    #     normal.Normalize()
-    #     return print('Normal Vector', normal)
+    @staticmethod
+    def CalculateNormal (first, second, third):
+        v1 = Vector3.Vector3( second.x - first.x, second.y - first.y, 0)
+        normal = Vector3.Vector3(v1.y, -v1.x, 0)
+        normal.Normalize()
+        return print('Normal Vector', normal)
 
-    # @staticmethod
-    # def AreCollinear(first, second, third):
-    #     if (first == second or first == third or second == third):
-    #         #print('Points are Collinear')
-    #         return True
-    #     v1 = Vector3(first.x - second.x, first.y - second.y, 0)
-    #     v2 = Vector3(first.x - third.x, first.y - third.y, 0)
-    #     angle = Vector3.AngleDeg(v1,v2)
-    #     #angle = v1.AngleDeg(v2)
-    #     if ((fabs(angle) < MathDefaults.ToleranceLowPrecision) or (fabs(angle - 180) < MathDefaults.ToleranceLowPrecision)):
-    #         #print('Points are Collinear')
-    #         return True
-    #     #print('Points are Not Collinear')
-    #     return False
+    @staticmethod
+    def AreCollinear(first, second, third):
+        if (first == second or first == third or second == third):
+            return True
+        v1 = Vector3(first.x - second.x, first.y - second.y, 0)
+        v2 = Vector3(first.x - third.x, first.y - third.y, 0)
+        angle = Vector3.AngleDeg(v1,v2)
+        if ((fabs(angle) < Constants.PRECISION) or (fabs(angle - 180) < Constants.PRECISION)):
+            return True
+        return False
 
-    # def ToPoint3(self):
-    #     return Point3(self.x , self.y , 0)
+    def ToPoint3(self):
+        return Point3(self.x , self.y , 0)
 
     # @staticmethod
     # def CalculateInnerAngleDeg( pointBefore, basePoint, pointAfter):
@@ -100,37 +93,35 @@ class Point2:
     #     return MathUtils.MathUtils.CalculateInnerAngleDeg(p1, p2, p3)
 
 
-    # @staticmethod
-    # def ProjectToLine( p1, p2, p):
-        
-    #     v1 = (p2 - p1)
-    #     denominator = v1.Dot(v1)
-    #     if (fabs(denominator) < MathDefaults.ToleranceHighPrecision):
-    #         return p1
-    #     v2 = (p - p1)
-    #     u = (v1.Dot(v2)) / denominator
-    #     x = p1.x + (u * (p2.x - p1.x))
-    #     y = p1.y + (u * (p2.y - p1.y))
+    @staticmethod
+    def ProjectToLine( p1, p2, p):
+        v1 = (p2 - p1)
+        denominator = v1.Dot(v1)
+        if (fabs(denominator) < Constants.PRECISION):
+            return p1
+        v2 = (p - p1)
+        u = (v1.Dot(v2)) / denominator
+        x = p1.x + (u * (p2.x - p1.x))
+        y = p1.y + (u * (p2.y - p1.y))
 
-    #     return Point2(x, y)
+        return Point2(x, y)
 
-    # @staticmethod
-    # def ProjectToLineDirection( point, point1Line, point2Line, linePoint):
-        
-    #     id = point2Line - point1Line
-    #     id.Normalize()
+    @staticmethod
+    def ProjectToLineDirection( point, point1Line, point2Line, linePoint):
+        id = point2Line - point1Line
+        id.Normalize()
 
-    #     anotherPointOnLine = (linePoint + (id * 100.0))
-    #     v = (anotherPointOnLine - linePoint)
-    #     denominator = v.Dot(v)
-    #     if ( fabs(denominator) < MathDefaults.Tolerance):
-    #         return linePoint
+        anotherPointOnLine = (linePoint + (id * 100.0))
+        v = (anotherPointOnLine - linePoint)
+        denominator = v.Dot(v)
+        if ( fabs(denominator) < Constants.PRECISION):
+            return linePoint
 
-    #     vec1 = (point - linePoint)
-    #     vec2 = (anotherPointOnLine - linePoint)
+        vec1 = (point - linePoint)
+        vec2 = (anotherPointOnLine - linePoint)
 
-    #     u = (vec1.Dot(vec2)) / denominator
-    #     return (linePoint + (v * u))
+        u = (vec1.Dot(vec2)) / denominator
+        return (linePoint + (v * u))
 
 
     

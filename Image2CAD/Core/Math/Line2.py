@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 22 09:55:07 2020
 
 @author: Aditya Intwala
 """
@@ -8,6 +7,7 @@ Created on Tue Sep 22 09:55:07 2020
 
 from Math.Point2 import Point2
 from Math.Constants import Constants
+from Math.MathUtils import MathUtils
 from math import sqrt, fabs
 
 class Line2:
@@ -58,12 +58,12 @@ class Line2:
             return True
         return False
 
-    # def OnLine(self, point):
-    #     s = self.startPoint
-    #     e = self.endPoint
-    #     dir = e - s
-    #     dir.Normalize()
-    #     d = MathUtils.Distance_PointToLine2(s, dir, point)
-    #     if(d <= 5):             
-    #        return True
-    #     return False
+    def OnLine(self, point):
+        s = self.startPoint
+        e = self.endPoint
+        dir = e - s
+        dir.Normalize()
+        d = MathUtils.Distance_PointToLine2(s, dir, point)
+        if(d <= 5):             
+            return True
+        return False

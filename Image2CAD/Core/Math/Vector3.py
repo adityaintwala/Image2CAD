@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 22 09:34:07 2020
 
 @author: Aditya Intwala
 """
@@ -59,32 +58,4 @@ class Vector3:
     def Negate(self):
         return Vector3(-self.i, -self.j, -self.k)
 
-    # @staticmethod
-    # def AngleRad(self,other):
-    #     v1 = Vector3(self.i, self.j, self.k)
-    #     v1.Normalize()
-
-    #     v2 = Vector3(other.i, other.j, other.k)
-    #     v2.Normalize()
-
-    #     dot = v1.Dot(v2)
-
-    #     if (dot < -1.0):
-    #         dot = -1.0
-    #     if (dot > 1.0):
-    #         dot = 1.0
-    #     angle = acos(dot)
-    #     return angle
-
-    # @staticmethod
-    # def AngleDeg(self,other):
-    #     angle = self.AngleRad(self,other)
-    #     return Convert.Convert.RadToDeg(angle)
-
-   
-
-    # @staticmethod
-    # def TranslateByDistance(point , distance):
-    #     v = Vector3(point.x, point.y, point.z)
-    #     v.Normalize()
-    #     return Point3.Point3(point.x + (v.i * distance), point.y +(v.j * distance), point.z + (v.k * distance))
+    

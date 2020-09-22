@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 22 09:33:55 2020
 
 @author: Aditya Intwala
 """
@@ -58,33 +57,7 @@ class Vector2:
     def Dot(self, other):
         return ((self.i * other.i) + (self.j * other.j))
 
-    # @staticmethod
-    # def AngleDeg(self,other):
-    #     angle = self.AngleRad(self,other)
-    #     return Convert.Convert.RadToDeg(angle)
-
-    # @staticmethod
-    # def AngleRad(self,other):
-    #     v1 = Vector2(self.i, self.j)
-    #     v1.Normalize()
-
-    #     v2 = Vector2(other.i, other.j)
-    #     v2.Normalize()
-
-    #     dot = v1.Dot(v2)
-
-    #     if (dot < -1.0):
-    #         dot = -1.0
-    #     if (dot > 1.0):
-    #         dot = 1.0
-    #     angle = acos(dot)
-    #     return angle
-
-    # @staticmethod
-    # def TranslateByDistance(point , distance):
-    #     v = Vector2(point.x, point.y)
-    #     v.Normalize()
-    #     return Point2.Point2(point.x + (v.i * distance), point.y +(v.j * distance))
+    
 
     
 
