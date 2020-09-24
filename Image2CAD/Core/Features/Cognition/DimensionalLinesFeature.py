@@ -6,7 +6,7 @@
 
 
 import cv2
-from LineSegments.LineSegmentsFeature import LineSegmentsFeature
+from Core.Features.LineSegments.LineSegmentsFeature import LineSegmentsFeature
 
 from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import Element, SubElement

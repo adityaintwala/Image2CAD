@@ -7,9 +7,9 @@
 
 import cv2
 from math import fabs
-import Math
-from Cognition import Cognition
-from LineSegments.SpecialLineSegments import SpecialLineSegments
+import Core.Math
+from Core.Features.Cognition import Cognition
+from Core.Features.LineSegments.SpecialLineSegments import SpecialLineSegments
 
 class SupportLinesFeature():
 

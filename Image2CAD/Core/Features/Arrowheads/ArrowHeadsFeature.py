@@ -7,8 +7,8 @@
 
 import cv2
 import numpy as np
-from Math3d import Point2
-from FeatureManager import ArrowHeads
+from Core.Math.Point2 import Point2
+from Core.Features.FeatureManager import ArrowHeads
 
 from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import Element, SubElement
@@ -33,7 +33,7 @@ class ArrowHeadsFeature():
         erosion = cv2.erode(arrows_image, kernel)
         dilated = cv2.dilate(erosion, kernel)
         
-        contour,hierarchy = cv2.findContours(dilated,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        _im,contour,hierarchy = cv2.findContours(dilated,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
         
         empty_image = erosion.copy()
         empty_image.fill(0)

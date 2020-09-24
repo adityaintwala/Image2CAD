@@ -6,15 +6,16 @@
 
 
 import numpy as np
-import Math
+from Core.Math.Point2 import Point2
+from Core.Math.Line2 import Line2
 from math import fabs
 
 class ArrowHeads():
 
     def __init__(self):
-        self._BoundingBoxP1 = Math.Point2(0,0)
-        self._BoundingBoxP2 = Math.Point2(0,0)
-        self._ArrowCenter = Math.Point2(0,0)
+        self._BoundingBoxP1 = Point2(0,0)
+        self._BoundingBoxP2 = Point2(0,0)
+        self._ArrowCenter = Point2(0,0)
         self._Direction = ""
 
     def __hash__(self):
@@ -33,7 +34,7 @@ class DimensionalLines():
 
     def __init__(self):
         self._ArrowHeads = ArrowHeads()
-        self._Leaders = Math.Line2(Math.Point2(0,0),Math.Point2(2,2))
+        self._Leaders = Line2(Point2(0,0),Point2(2,2))
 
     def __hash__(self):
       return hash((self._ArrowHeads, self._Leaders))
@@ -50,8 +51,8 @@ class DimensionalTexts():
 
     def __init__(self):
         self._Text = "AdityaIntwala"
-        self._TextBoxP1 = Math.Point2(0,0)
-        self._TextBoxP2 = Math.Point2(0,0)
+        self._TextBoxP1 = Point2(0,0)
+        self._TextBoxP2 = Point2(0,0)
         self._Orientation = 90        
 
     def __hash__(self):
@@ -106,14 +107,14 @@ class CorrelatedEntity():
 class ExtractedLines():
     _rho = 0
     _theta = 0
-    _p1 = Math.Point2(0,0)
-    _p2 = Math.Point2(0,0)
+    _p1 = Point2(0,0)
+    _p2 = Point2(0,0)
 
     def __init__(self):
         self._rho = 0
         self._theta = 0
-        self._p1 = Math.Point2(0,0)
-        self._p2 = Math.Point2(0,0)
+        self._p1 = Point2(0,0)
+        self._p2 = Point2(0,0)
 
     def __eq__(self, other):
         tol = 1.0
@@ -133,12 +134,12 @@ class ExtractedLines():
         self._p2 = p2
 
 class ExtractedCircles():
-    _centre = Math.Point2(0,0)
+    _centre = Point2(0,0)
     _radius = 0
 
     def __init__(self):
         
-        self._centre = Math.Point2(0,0)
+        self._centre = Point2(0,0)
         self._radius = 0
         self._pixels = []
 
@@ -159,15 +160,15 @@ class ExtractedCircles():
         
 class ExtractedText():
 
-    _p1 = Math.Point2(0,0)
-    _p2 = Math.Point2(0,0)
+    _p1 = Point2(0,0)
+    _p2 = Point2(0,0)
     _text = ""
     _cropedImg = np.zeros([100,100,3],dtype=np.uint8)
 
     def __init__(self):
         
-        self._p1 = Math.Point2(0,0)
-        self._p2 = Math.Point2(0,0)
+        self._p1 = Point2(0,0)
+        self._p2 = Point2(0,0)
         self._text = ""
         self._cropedImg = np.zeros([100,100,3],dtype=np.uint8)
 

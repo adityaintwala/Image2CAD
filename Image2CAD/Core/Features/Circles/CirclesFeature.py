@@ -10,8 +10,8 @@ import cv2
 import numpy as np
 from scipy import optimize
 from math import fabs
-from Math import Point2
-from FeatureManager import ExtractedCircles
+from Core.Math import Point2
+from Core.Features.FeatureManager import ExtractedCircles
 
 from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import Element, SubElement

@@ -9,12 +9,12 @@ Created on Tue Sep 22 17:01:10 2020
 import cv2
 import numpy as np
 import os
-from Math import Point2
-from ConnectedComponents.ConnectedComponents import ConnectedComponent
-from FeatureManager import DimensionalTexts
-from Utils.ImgTransform import ImgTransform
-from .Cognition.Cognition import Cognition
-import pytesseract
+from Core.Math.Point2 import Point2
+from Core.Features.ConnectedComponents.ConnectedComponents import ConnectedComponent
+from Core.Features.FeatureManager import DimensionalTexts
+from Core.Utils.ImgTransform import ImgTransform
+from Core.Features.Cognition.Cognition import Cognition
+from Core.Features.Texts import pytesseract
 from PIL import Image
 
 from xml.etree import ElementTree as ET
@@ -106,7 +106,7 @@ class TextsFeature:
         gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         ret, thresh_img = cv2.threshold(gray_img,190,255,cv2.THRESH_BINARY)
         blank_img = np.zeros(img.shape, np.uint8)
-        labels, ccImg = ConnectedComponent.detect(thresh_img)
+        labels, ccImg = ConnectedComponent.Detect(thresh_img)
         SortedLabels = {}
         for key, value in sorted(labels.items()):
             SortedLabels.setdefault(value, []).append(key)

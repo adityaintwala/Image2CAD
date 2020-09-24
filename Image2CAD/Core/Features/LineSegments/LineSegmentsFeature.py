@@ -6,10 +6,11 @@
 
 import cv2
 import numpy as np
-import Math
-import SpecialLineSegments
-from Cognition.Cognition import Cognition
-from FeatureManager import ExtractedLines
+from Core.Math.Point2 import Point2
+from Core.Math.Line2 import Line2
+from Core.Features.LineSegments.SpecialLineSegments import SpecialLineSegments
+from Core.Features.Cognition.Cognition import Cognition
+from Core.Features.FeatureManager import ExtractedLines
 
 from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import Element, SubElement
@@ -42,7 +43,7 @@ class LineSegmentsFeature():
          ls = lineSegments[i]
          cl = LineSegmentsFeature.CollinearLineExists(lines, ls)
          if None == cl:
-            temp = Math.Line2(ls.startPoint, ls.endPoint)
+            temp = Line2(ls.startPoint, ls.endPoint)
             if temp.IsDegenerate() == False:
                lines[temp] = []
                lines[temp].append(ls)
@@ -72,7 +73,7 @@ class LineSegmentsFeature():
           sl.ProjectCorners()
           sl.SortCorners()
           sl.ProjectLineSegmentEnds()
-          lineSegments = sl.DetectDimensionalLineSegments()
+          lineSegments = sl.DetectDimensionalLineSegments(img, ArrowHeadsList)
           if len(lineSegments) != 0:
               for l in lineSegments:
                     lineSegmentsDetected.append(l)
@@ -107,9 +108,9 @@ class LineSegmentsFeature():
         if None != lines.any():
             for line in lines:
                 for x1,y1,x2,y2 in line:
-                    p1 = Math.Point2(x1,y1)
-                    p2 = Math.Point2(x2,y2)
-                    ex = ExtractedLines.ExtractedLines()
+                    p1 = Point2(x1,y1)
+                    p2 = Point2(x2,y2)
+                    ex = ExtractedLines()
                     ex.ExtractLine(ex,rho, theta, p1, p2)
                     extractedLines.append(ex)
                     cv2.line(img, (x1,y1), (x2,y2), (0,0,255), 1)
@@ -129,7 +130,7 @@ class LineSegmentsFeature():
         for i in corners:
             x,y = i.ravel()
             cv2.circle(image,(x,y), 2, (0,60,255),-1)
-            points.append(Math.Point2(x, y))
+            points.append(Point2(x, y))
         
         return points,image
     
@@ -145,7 +146,7 @@ class LineSegmentsFeature():
 
         lineSegments = []
         for el in extractedLinesP:
-           ls = Math.Line2(el._p1, el._p2)
+           ls = Line2(el._p1, el._p2)
            lineSegments.append(ls)
 
         uniqueLines = LineSegmentsFeature.GetUniqueLines(lineSegments)

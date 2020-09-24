@@ -7,17 +7,20 @@
 import cv2
 from math import fabs
 import numpy as np
-import Math
-from FeatureManager import DimensionalLines
+from Core.Math.Point2 import Point2
+from Core.Math.Line2 import Line2
+from Core.Math.MathUtils import MathUtils
+from Core.Features.Cognition.Cognition import Cognition
+from Core.Features.FeatureManager import DimensionalLines
 
 global img, threshImg, imageCorner, imageHoughLine, imageOutput, imgHeight, imgWidth, imgChannels, ArrowHeadsList,blankImg
 
 class SpecialLineSegments:
 
     def __init__(self):
-        self._p1 = Math.Point2(0,0)
-        self._p2 = Math.Point2(0,0)
-        self._line = Math.Line2(self._p1, self._p2)
+        self._p1 = Point2(0,0)
+        self._p2 = Point2(0,0)
+        self._line = Line2(self._p1, self._p2)
         self._lineSegments = []
         self._cornerPoints = []
 
@@ -28,7 +31,7 @@ class SpecialLineSegments:
        corners = self._cornerPoints
        projCorners = []
        for cp in corners:
-          pcp = Math.MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, cp)
+          pcp = MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, cp)
           projCorners.append(pcp)
        self._cornerPoints = projCorners
 
@@ -37,9 +40,9 @@ class SpecialLineSegments:
        for ls in self._lineSegments:
           lss = ls.startPoint
           lse = ls.endPoint
-          lssp = Math.MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, lss)
-          lsep = Math.MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, lse)
-          lsp = Math.Line2(lssp, lsep)
+          lssp = MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, lss)
+          lsep = MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, lse)
+          lsp = Line2(lssp, lsep)
           projLineSegments.append(lsp)
        self._lineSegments = projLineSegments
 
@@ -64,8 +67,8 @@ class SpecialLineSegments:
        numCorners = len(self._cornerPoints)
        if numCorners >= 1:
             lsp1, lsp2 = SpecialLineSegments.SeggregatePoints(self._lineSegments, self._line)
-            lsp1 = Math.MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, lsp1)
-            lsp2 = Math.MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, lsp2)
+            lsp1 = MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, lsp1)
+            lsp2 = MathUtils.ProjectToLine2(self._line.startPoint, self._line.endPoint, lsp2)
             cs = self._cornerPoints[0]
             ce = self._cornerPoints[numCorners - 1]
             points.append(lsp1)
@@ -76,7 +79,7 @@ class SpecialLineSegments:
             numPts = len(sortedEndPts)
             s = sortedEndPts[0]
             e = sortedEndPts[numPts - 1]
-            line = Math.Line2(s, e)
+            line = Line2(s, e)
             self._line = line
     
     def listCorners(self):
@@ -130,8 +133,8 @@ class SpecialLineSegments:
         if x < (imgWidth - scanRange) and y < (imgHeight - scanRange):
             for i in range(-scanRange, scanRange):
                 for j in range(-scanRange, scanRange):
-                    xj = x + j
-                    yi = y + i
+                    xj = int(x + j)
+                    yi = int(y + i)
                     if threshImg[yi, xj] == 0:
                         return True
         return False
@@ -265,8 +268,10 @@ class SpecialLineSegments:
                     return True
         return False
 
-    def DetectDimensionalLineSegments(self):
-       global img, threshImg
+    def DetectDimensionalLineSegments(self, im, arrowlist):
+       global img, threshImg, ArrowHeadsList
+       ArrowHeadsList = arrowlist
+       img = im
        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
        ret, threshImg = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
        numCorners = len(self._cornerPoints)
@@ -283,7 +288,7 @@ class SpecialLineSegments:
                     pointsOnLineBtnCorners = SpecialLineSegments.PixelScanner(c1, c, threshImg)
                     onlinePointsPercentage = self.FindPercentageOfPointsOnLine(pointsOnLineBtnCorners)
                     if onlinePointsPercentage > 90:
-                        newlineSegm = Math.Line2(c1,c)
+                        newlineSegm = Line2(c1,c)
                         if int(newlineSegm.Length()) > 8:                       #updated on 29-2-16
                             arrowHead = SpecialLineSegments.ReturnArrowHeads(c1)
                             if arrowHead is None:
@@ -306,14 +311,14 @@ class SpecialLineSegments:
                         pointsOnLineBtnCorners = SpecialLineSegments.PixelScanner(c1, c2, threshImg)
                         onlinePointsPercentage = self.FindPercentageOfPointsOnLine(pointsOnLineBtnCorners)
                         if onlinePointsPercentage > 90:
-                            newlineSegm = Math.Line2(c1,c2)
-                            if int(newlineSegm.Length()) > 8:                   #updated on 29-2-16
+                            newlineSegm = Line2(c1,c2)
+                            if int(newlineSegm.Length()) > 8:                   
                                 arrowHead1 = SpecialLineSegments.ReturnArrowHeads(c1)
                                 arrowHead2 = SpecialLineSegments.ReturnArrowHeads(c2)
                                 if arrowHead1 is None or arrowHead2 is None:
                                     continue
-                                overlap = SpecialLineSegments.CheckArrowOverlapBetweenTwo(arrowHead1, arrowHead2)    #Added on 29-2-16(to reduce Line between two arrowheads connection)
-                                if overlap == False:                                                            #Added on 29-2-16(to reduce Line between two arrowheads connection)
+                                overlap = SpecialLineSegments.CheckArrowOverlapBetweenTwo(arrowHead1, arrowHead2)    
+                                if overlap == False:  
                                     Dimensional_LS.append(newlineSegm)
                                     Dimensional_AH.append(arrowHead1)
                                     Dimensional_AH.append(arrowHead2)
@@ -335,7 +340,7 @@ class SpecialLineSegments:
               pointsOnLineBtnCorners = SpecialLineSegments.PixelScanner(c1, c2, threshImg)
               onlinePointsPercentage = self.FindPercentageOfPointsOnLine(pointsOnLineBtnCorners)
               if onlinePointsPercentage > 90:
-                    newlineSegm = Math.Line2(c1,c2)
+                    newlineSegm = Line2(c1,c2)
                     if int(newlineSegm.Length()) > 6:           #Updated on 18-2-16
                         detectedLineSegments.append(newlineSegm)
        else:
@@ -348,7 +353,7 @@ class SpecialLineSegments:
                     pointsOnLineBtnCorners = SpecialLineSegments.PixelScanner(c1, c2, threshImg)
                     onlinePointsPercentage = self.FindPercentageOfPointsOnLine(pointsOnLineBtnCorners)
                     if onlinePointsPercentage > 90:
-                        newlineSegm = Math.Line2(c1,c2)
+                        newlineSegm = Line2(c1,c2)
                         if int(newlineSegm.Length()) > 6:           #Updated on 18-2-16
                             detectedLineSegments.append(newlineSegm)
        return detectedLineSegments

@@ -6,18 +6,18 @@ Created on Tue Sep 22 18:16:34 2020
 """
 
 
-from Math import MathUtils, Point2, Constants
+from Core.Math.Point2 import Point2
+from Core.Math.Line2 import Line2
+from Core.Math.MathUtils import MathUtils
+from Core.Math.Constants import Constants
 import cv2
 import numpy as np
 import operator
-from math import sqrt, fabs
+from math import sqrt, fabs, atan2
 import collections
 import sys
-from FeatureManager import Dimensions, CorrelatedEntity
-from Utils.ImgTransform import ImgTransform
-
-from xml.etree import ElementTree as ET
-from xml.etree.ElementTree import Element, SubElement
+from Core.Features.FeatureManager import Dimensions, CorrelatedEntity
+from Core.Utils.ImgTransform import ImgTransform
 
 
 class Cognition():
@@ -43,7 +43,7 @@ class Cognition():
     
     @staticmethod
     def getAngleBetweenLineAndAxis(p1,p2):
-        line = Math3d.Line(p1,p2)
+        line = Line2(p1,p2)
         up1 = Cognition.GetUParam(p1,line)
         up2 = Cognition.GetUParam(p2,line)
         if up2 > up1:
@@ -52,7 +52,7 @@ class Cognition():
         else:
             deltaY =  - p1.y - p2.y
             deltaX =  - p1.x - p2.x
-        radians = Cognition.angle_trunc(np.atan2(deltaY, deltaX))
+        radians = Cognition.angle_trunc(atan2(deltaY, deltaX))
         degrees = MathUtils.RadToDeg(radians)
         degrees = (360 - degrees)
         return degrees
@@ -111,18 +111,18 @@ class Cognition():
 
     @staticmethod
     def CheckOverlapByLineSegment(B1_P1, B1_P2, B2_P1, B2_P2):
-        Ap1 = Math3d.Point2(B1_P1.x, B1_P1.y)
-        Ap2 = Math3d.Point2(B1_P2.x, B1_P1.y)
-        Ap3 = Math3d.Point2(B1_P2.x, B1_P2.y)
-        Ap4 = Math3d.Point2(B1_P1.x, B1_P2.y)
+        Ap1 = Point2(B1_P1.x, B1_P1.y)
+        Ap2 = Point2(B1_P2.x, B1_P1.y)
+        Ap3 = Point2(B1_P2.x, B1_P2.y)
+        Ap4 = Point2(B1_P1.x, B1_P2.y)
 
-        Bp1 = Math3d.Point2(B2_P1.x, B2_P1.y)
-        Bp2 = Math3d.Point2(B2_P2.x, B2_P1.y)
-        Bp3 = Math3d.Point2(B2_P2.x, B2_P2.y)
-        Bp4 = Math3d.Point2(B2_P1.x, B2_P2.y)
+        Bp1 = Point2(B2_P1.x, B2_P1.y)
+        Bp2 = Point2(B2_P2.x, B2_P1.y)
+        Bp3 = Point2(B2_P2.x, B2_P2.y)
+        Bp4 = Point2(B2_P1.x, B2_P2.y)
 
-        A_Segments = [Math3d.LineSegment2(Ap1, Ap2), Math3d.LineSegment2(Ap2, Ap3), Math3d.LineSegment2(Ap3, Ap4), Math3d.LineSegment2(Ap4, Ap1)]
-        B_Segments = [Math3d.LineSegment2(Bp1, Bp2), Math3d.LineSegment2(Bp2, Bp3), Math3d.LineSegment2(Bp3, Bp4), Math3d.LineSegment2(Bp4, Bp1)]
+        A_Segments = [Line2(Ap1, Ap2), Line2(Ap2, Ap3), Line2(Ap3, Ap4), Line2(Ap4, Ap1)]
+        B_Segments = [Line2(Bp1, Bp2), Line2(Bp2, Bp3), Line2(Bp3, Bp4), Line2(Bp4, Bp1)]
 
         for i in A_Segments:
             p1 = i.startPoint
@@ -211,12 +211,12 @@ class Cognition():
 
     @staticmethod
     def GetOrientation(Dimensionallines,BB):
-        text_P1 = Math3d.Point2(BB[0]-5,BB[1]-5)
-        text_P2 = Math3d.Point2(BB[0]+BB[2]+5,BB[1]-5)
-        text_P3 = Math3d.Point2(BB[0]+BB[2]+5,BB[1]+BB[3]+5)
-        text_P4 = Math3d.Point2(BB[0]-5,BB[1]+BB[3]+5)
+        text_P1 = Point2(BB[0]-5,BB[1]-5)
+        text_P2 = Point2(BB[0]+BB[2]+5,BB[1]-5)
+        text_P3 = Point2(BB[0]+BB[2]+5,BB[1]+BB[3]+5)
+        text_P4 = Point2(BB[0]-5,BB[1]+BB[3]+5)
 
-        line = Math3d.Line(text_P1,text_P3)
+        line = Line2(text_P1,text_P3)
         up1 = Cognition.GetUParam(text_P1,line) 
         up2 = Cognition.GetUParam(text_P3,line)
         if up2 > up1:
@@ -233,12 +233,12 @@ class Cognition():
                 line = l
                 P1 = l.startPoint
                 P2 = l.endPoint
-                Rect2_p1 = Math3d.Point2(P1.x-6, P1.y-6)
-                Rect2_p2 = Math3d.Point2(P2.x+6, P2.y+6)
-                Rect2_p3 = Math3d.Point2(P2.x+6,P2.y-6)
-                Rect2_p4 = Math3d.Point2(P1.x-6,P1.y+6)
-                Rect1_Segments = [Math3d.LineSegment2(Rect1_p1, Rect1_p2), Math3d.LineSegment2(Rect1_p2, Rect1_p3), Math3d.LineSegment2(Rect1_p3, Rect1_p4), Math3d.LineSegment2(Rect1_p4, Rect1_p1)]
-                Rect2_Segments = [Math3d.LineSegment2(Rect2_p1, Rect2_p2), Math3d.LineSegment2(Rect2_p2, Rect2_p3), Math3d.LineSegment2(Rect2_p3, Rect2_p4), Math3d.LineSegment2(Rect2_p4, Rect2_p1)]
+                Rect2_p1 = Point2(P1.x-6, P1.y-6)
+                Rect2_p2 = Point2(P2.x+6, P2.y+6)
+                Rect2_p3 = Point2(P2.x+6,P2.y-6)
+                Rect2_p4 = Point2(P1.x-6,P1.y+6)
+                Rect1_Segments = [Line2(Rect1_p1, Rect1_p2), Line2(Rect1_p2, Rect1_p3), Line2(Rect1_p3, Rect1_p4), Line2(Rect1_p4, Rect1_p1)]
+                Rect2_Segments = [Line2(Rect2_p1, Rect2_p2), Line2(Rect2_p2, Rect2_p3), Line2(Rect2_p3, Rect2_p4), Line2(Rect2_p4, Rect2_p1)]
                 overlap = Cognition.CheckIfOverlapLineSegments(Rect1_Segments, Rect2_Segments)
                 if overlap == True:
                     OrientationAngle = Cognition.getAngleBetweenLineAndAxis(P1,P2)
@@ -247,7 +247,7 @@ class Cognition():
 
     @staticmethod
     def MidPoint(p1, p2):
-        return Math3d.Point2(int((p1.x + p2.x)/2), int((p1.y + p2.y)/2))
+        return Point2(int((p1.x + p2.x)/2), int((p1.y + p2.y)/2))
 
     @staticmethod
     def DimensionProximityCorrelation(Detection_Manager):
@@ -256,12 +256,12 @@ class Cognition():
         DimensionalText = Detection_Manager._DetectedDimensionalText  
         for DT in DimensionalText:
             
-            text_P1 = Math3d.Point2(DT._TextBoxP1.x - 3, DT._TextBoxP1.y - 3)
-            text_P2 = Math3d.Point2(DT._TextBoxP2.x + 3, DT._TextBoxP1.y - 3)
-            text_P3 = Math3d.Point2(DT._TextBoxP2.x + 3, DT._TextBoxP2.y + 3)
-            text_P4 = Math3d.Point2(DT._TextBoxP1.x - 3, DT._TextBoxP2.y + 3)
+            text_P1 = Point2(DT._TextBoxP1.x - 3, DT._TextBoxP1.y - 3)
+            text_P2 = Point2(DT._TextBoxP2.x + 3, DT._TextBoxP1.y - 3)
+            text_P3 = Point2(DT._TextBoxP2.x + 3, DT._TextBoxP2.y + 3)
+            text_P4 = Point2(DT._TextBoxP1.x - 3, DT._TextBoxP2.y + 3)
     
-            line = Math3d.Line(text_P1,text_P3)
+            line = Line2(text_P1,text_P3)
             up1 = Cognition.GetUParam(text_P1,line) 
             up2 = Cognition.GetUParam(text_P3,line)
             if up2 > up1:
@@ -285,12 +285,12 @@ class Cognition():
                         else:
                             P1 = l.endPoint
                             P2 = l.startPoint
-                        Rect2_p1 = Math3d.Point2(P1.x-6, P1.y-6)
-                        Rect2_p2 = Math3d.Point2(P2.x+6, P2.y+6)
-                        Rect2_p3 = Math3d.Point2(P2.x+6,P2.y-6)
-                        Rect2_p4 = Math3d.Point2(P1.x-6,P1.y+6)
-                        Rect1_Segments = [Math3d.LineSegment2(Rect1_p1, Rect1_p2), Math3d.LineSegment2(Rect1_p2, Rect1_p3), Math3d.LineSegment2(Rect1_p3, Rect1_p4), Math3d.LineSegment2(Rect1_p4, Rect1_p1)]
-                        Rect2_Segments = [Math3d.LineSegment2(Rect2_p1, Rect2_p2), Math3d.LineSegment2(Rect2_p2, Rect2_p3), Math3d.LineSegment2(Rect2_p3, Rect2_p4), Math3d.LineSegment2(Rect2_p4, Rect2_p1)]
+                        Rect2_p1 = Point2(P1.x-6, P1.y-6)
+                        Rect2_p2 = Point2(P2.x+6, P2.y+6)
+                        Rect2_p3 = Point2(P2.x+6,P2.y-6)
+                        Rect2_p4 = Point2(P1.x-6,P1.y+6)
+                        Rect1_Segments = [Line2(Rect1_p1, Rect1_p2), Line2(Rect1_p2, Rect1_p3), Line2(Rect1_p3, Rect1_p4), Line2(Rect1_p4, Rect1_p1)]
+                        Rect2_Segments = [Line2(Rect2_p1, Rect2_p2), Line2(Rect2_p2, Rect2_p3), Line2(Rect2_p3, Rect2_p4), Line2(Rect2_p4, Rect2_p1)]
                         overlap = Cognition.CheckIfOverlapLineSegments(Rect1_Segments, Rect2_Segments)
                         if overlap == True:
                             D = Dimensions()
@@ -339,8 +339,8 @@ class Cognition():
         DimensionalLine_Midpointslist = []
         for DL in DimensionalLines:
             for i in DL._Leaders:
-                P1 = Math3d.Point2(i.startPoint.x - 6, i.startPoint.y - 6)
-                P2 = Math3d.Point2(i.endPoint.x + 6, i.endPoint.y + 6)
+                P1 = Point2(i.startPoint.x - 6, i.startPoint.y - 6)
+                P2 = Point2(i.endPoint.x + 6, i.endPoint.y + 6)
                 md_point = Cognition.MidPoint(P1, P2)
                 DimensionalLine_Midpoints[md_point] = DL
                 DimensionalLine_Midpointslist.append(md_point)
@@ -354,11 +354,11 @@ class Cognition():
         DimensionCorrelated = []
         removedLs = []
         for i in sortedTextBoxPoints:
-            text_P1 = Math3d.Point2(i._TextBoxP1.x - 3, i._TextBoxP1.y - 3)
-            text_P2 = Math3d.Point2(i._TextBoxP2.x + 3, i._TextBoxP1.y - 3)
-            text_P3 = Math3d.Point2(i._TextBoxP2.x + 3, i._TextBoxP2.y + 3)
-            text_P4 = Math3d.Point2(i._TextBoxP1.x - 3, i._TextBoxP2.y + 3)
-            line = Math3d.Line(text_P1,text_P3)
+            text_P1 = Point2(i._TextBoxP1.x - 3, i._TextBoxP1.y - 3)
+            text_P2 = Point2(i._TextBoxP2.x + 3, i._TextBoxP1.y - 3)
+            text_P3 = Point2(i._TextBoxP2.x + 3, i._TextBoxP2.y + 3)
+            text_P4 = Point2(i._TextBoxP1.x - 3, i._TextBoxP2.y + 3)
+            line = Line2(text_P1,text_P3)
             up1 = Cognition.GetUParam(text_P1,line) 
             up2 = Cognition.GetUParam(text_P3,line)
             if up2 > up1:
@@ -378,12 +378,12 @@ class Cognition():
                             line = l
                             P1 = l.startPoint
                             P2 = l.endPoint
-                            Rect2_p1 = Math3d.Point2(P1.x-6, P1.y-6)
-                            Rect2_p2 = Math3d.Point2(P2.x+6, P2.y+6)
-                            Rect2_p3 = Math3d.Point2(P2.x+6,P2.y-6)
-                            Rect2_p4 = Math3d.Point2(P1.x-6,P1.y+6)
-                            Rect1_Segments = [Math3d.LineSegment2(Rect1_p1, Rect1_p2), Math3d.LineSegment2(Rect1_p2, Rect1_p3), Math3d.LineSegment2(Rect1_p3, Rect1_p4), Math3d.LineSegment2(Rect1_p4, Rect1_p1)]
-                            Rect2_Segments = [Math3d.LineSegment2(Rect2_p1, Rect2_p2), Math3d.LineSegment2(Rect2_p2, Rect2_p3), Math3d.LineSegment2(Rect2_p3, Rect2_p4), Math3d.LineSegment2(Rect2_p4, Rect2_p1)]
+                            Rect2_p1 = Point2(P1.x-6, P1.y-6)
+                            Rect2_p2 = Point2(P2.x+6, P2.y+6)
+                            Rect2_p3 = Point2(P2.x+6,P2.y-6)
+                            Rect2_p4 = Point2(P1.x-6,P1.y+6)
+                            Rect1_Segments = [Line2(Rect1_p1, Rect1_p2), Line2(Rect1_p2, Rect1_p3), Line2(Rect1_p3, Rect1_p4), Line2(Rect1_p4, Rect1_p1)]
+                            Rect2_Segments = [Line2(Rect2_p1, Rect2_p2), Line2(Rect2_p2, Rect2_p3), Line2(Rect2_p3, Rect2_p4), Line2(Rect2_p4, Rect2_p1)]
                             overlap = Cognition.CheckIfOverlapLineSegments(Rect1_Segments, Rect2_Segments)
                             if overlap == True:
                                 removedLs.append(j)
@@ -463,8 +463,8 @@ class Cognition():
                 sortedDict = sorted(dictPt.items(), key= operator.itemgetter(1))
                 extremePt = sortedDict[len(sortedDict) - 1][0]
                 cv2.circle(cornerImg,(extremePt.x,extremePt.y),3,255,-1)
-                projectedPt = Math3d.MathUtils.ProjectToLine2(dl._Leaders[0].startPoint, dl._Leaders[0].endPoint, extremePt)
-                projectedCorner = Math3d.MathUtils.ProjectToLine2(dl._Leaders[0].startPoint, dl._Leaders[0].endPoint, c)
+                projectedPt = MathUtils.ProjectToLine2(dl._Leaders[0].startPoint, dl._Leaders[0].endPoint, extremePt)
+                projectedCorner = MathUtils.ProjectToLine2(dl._Leaders[0].startPoint, dl._Leaders[0].endPoint, c)
                 Direction = Cognition.GetDirection(projectedPt, projectedCorner)
                 ah._Direction = Direction
                 Cognition.AssignArrowHeadsDirection(ArrowHeadsList, ah._ArrowCenter, Direction)
@@ -502,8 +502,8 @@ class Cognition():
         
     @staticmethod
     def Thickness(point1, point2, img):
-        p1 =Math3d.Point2(point1.x-2, point1.y-2)
-        p2 =Math3d.Point2(point2.x+2, point2.y+2)
+        p1 =Point2(point1.x-2, point1.y-2)
+        p2 =Point2(point2.x+2, point2.y+2)
         Image = img[p1.y:p2.y, p1.x:p2.x]
         gray = cv2.cvtColor(Image,cv2.COLOR_BGR2GRAY)
         ret, thresh = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
@@ -530,7 +530,7 @@ class Cognition():
                     d = LS2.startPoint.DistanceTo(LS1.endPoint)
                     newLS = l[id + 1]
                     if d <= 5:
-                        newLS = Math3d.LineSegment2(LS1.startPoint, LS2.endPoint)
+                        newLS = Line2(LS1.startPoint, LS2.endPoint)
                         l[id+1] = newLS
                     else:
                         lines.append(l[id])
@@ -558,7 +558,7 @@ class Cognition():
                     if (det != 0):
                         x = (B2*C1 - B1*C2)/det
                         y = (A1*C2 - A2*C1)/det
-                        IntersectionPt = Math3d.Point2(x,y)
+                        IntersectionPt = Point2(x,y)
                         newStartPoint = IntersectionPt
                 elif 5 >= fabs(s.x - ls.endPoint.x) > 0 and 5 >= fabs(s.y - ls.endPoint.y) > 0:
                     A1, B1, C1 = Cognition.LineCoefficients(s, e)
@@ -567,7 +567,7 @@ class Cognition():
                     if (det != 0):
                         x = (B2*C1 - B1*C2)/det
                         y = (A1*C2 - A2*C1)/det
-                        IntersectionPt = Math3d.Point2(x,y)
+                        IntersectionPt = Point2(x,y)
                         newStartPoint = IntersectionPt
                    
         for l in EntityLines:
@@ -579,7 +579,7 @@ class Cognition():
                     if (det != 0):
                         x = (B2*C1 - B1*C2)/det
                         y = (A1*C2 - A2*C1)/det
-                        IntersectionPt = Math3d.Point2(x,y)
+                        IntersectionPt = Point2(x,y)
                         newEndPoint = IntersectionPt
                 elif 5 >= fabs(e.x - ls.startPoint.x) > 0 and 5 >= fabs(e.y - ls.startPoint.y) > 0:
                     A1, B1, C1 = Cognition.LineCoefficients(s, e)
@@ -588,9 +588,9 @@ class Cognition():
                     if (det != 0):
                         x = (B2*C1 - B1*C2)/det
                         y = (A1*C2 - A2*C1)/det
-                        IntersectionPt = Math3d.Point2(x,y)
+                        IntersectionPt = Point2(x,y)
                         newEndPoint = IntersectionPt
-        newSegment = Math3d.LineSegment2(newStartPoint, newEndPoint)
+        newSegment = Line2(newStartPoint, newEndPoint)
         return newSegment            
 
     @staticmethod
@@ -705,7 +705,7 @@ class Cognition():
                                 shortListedLines.append(l)                                
                                
                     for l in shortListedLines:
-                            projectedPt = Math3d.MathUtils.ProjectToLine2(l.startPoint, l.endPoint, bbMin)
+                            projectedPt = MathUtils.ProjectToLine2(l.startPoint, l.endPoint, bbMin)
                             projectedDistance = bbMin.DistanceTo(projectedPt)
                             if projectedDistance < 8 :          #<7
                                 CorrelatedLines.append(l)
@@ -719,7 +719,7 @@ class Cognition():
                                
                    for l in shortListedLines:
                        
-                           projectedPt = Math3d.MathUtils.ProjectToLine2(l.startPoint, l.endPoint, bbMax)
+                           projectedPt = MathUtils.ProjectToLine2(l.startPoint, l.endPoint, bbMax)
                            projectedDistance = bbMax.DistanceTo(projectedPt)
                            if projectedDistance < 8 :       #<7
                                CorrelatedLines.append(l)
@@ -731,7 +731,7 @@ class Cognition():
                                 shortListedLines.append(l)
                                 
                     for l in shortListedLines:
-                            projectedPt = Math3d.MathUtils.ProjectToLine2(l.startPoint, l.endPoint, bbMin)
+                            projectedPt = MathUtils.ProjectToLine2(l.startPoint, l.endPoint, bbMin)
                             projectedDistance = bbMin.DistanceTo(projectedPt)
                             if projectedDistance < 8 :      #<7
                                 CorrelatedLines.append(l)
@@ -743,7 +743,7 @@ class Cognition():
                                 shortListedLines.append(l)
                                 
                     for l in shortListedLines:
-                            projectedPt = Math3d.MathUtils.ProjectToLine2(l.startPoint, l.endPoint, bbMax)
+                            projectedPt = MathUtils.ProjectToLine2(l.startPoint, l.endPoint, bbMax)
                             projectedDistance = bbMax.DistanceTo(projectedPt)
                             if projectedDistance < 8 :      #<7
                                 CorrelatedLines.append(l)
