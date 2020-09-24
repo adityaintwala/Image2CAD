@@ -6,7 +6,7 @@
 
 
 import cv2
-from Math import Point2
+from Core.Math.Point2 import Point2
 
 class Eraser():
 
