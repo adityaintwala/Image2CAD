@@ -6,9 +6,9 @@
 
 
 from math import fabs, sqrt
-from Math.Point2 import Point2
-from Math.Vector3 import Vector3
-from Math.Constants import Constants
+from Core.Math.Point2 import Point2
+from Core.Math.Vector3 import Vector3
+from Core.Math.Constants import Constants
 
 class Point3:
 

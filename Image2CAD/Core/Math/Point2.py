@@ -5,10 +5,10 @@
 """
 
 from math import fabs, sqrt
-from Math.Point3 import Point3
-from Math.Vector2 import Vector2
-from Math.Vector3 import Vector3
-from Math.Constants import Constants
+#from Core.Math.Point3 import Point3
+from Core.Math.Vector2 import Vector2
+from Core.Math.Vector3 import Vector3
+from Core.Math.Constants import Constants
 
 class Point2:
 
@@ -82,8 +82,8 @@ class Point2:
             return True
         return False
 
-    def ToPoint3(self):
-        return Point3(self.x , self.y , 0)
+    #def ToPoint3(self):
+    #    return Point3(self.x , self.y , 0)
 
     # @staticmethod
     # def CalculateInnerAngleDeg( pointBefore, basePoint, pointAfter):

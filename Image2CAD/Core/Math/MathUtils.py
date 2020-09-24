@@ -5,12 +5,11 @@
 """
 
 
-from Math.Point2 import Point2
-from Math.Point3 import Point3
-from Math.Vector2 import Vector2
-from Math.Vector3 import Vector3
-from Math.Constants import Constants
-from Math3d.Convert import Convert
+from Core.Math.Point2 import Point2
+from Core.Math.Point3 import Point3
+from Core.Math.Vector2 import Vector2
+from Core.Math.Vector3 import Vector3
+from Core.Math.Constants import Constants
 from math import sqrt, acos, fabs
 
 class MathUtils:

@@ -6,7 +6,7 @@
 
 
 from math import sqrt, fabs
-from Math.Constants import Constants
+from Core.Math.Constants import Constants
 
 class Vector2:
     def __init__ (self):
