@@ -8,18 +8,19 @@
 from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import Element, SubElement, Comment 
 from datetime import datetime
+import time
 
 class I2CWriter:
 
        @staticmethod
        def Write(Feature_Manager):
            make_dir_root = Feature_Manager._RootDirectory
-           time = datetime.now().isoformat()
+           time_str = time.strftime("%Y%m%d-%H%M%S") #datetime.now().isoformat()
            Root = Element("Root")
            Session = SubElement(Root, "Session")
            User = SubElement(Session,"AdityaIntwala")
            Date_Created = SubElement(Session, "Date_Created")
-           Date_Created.text = time
+           Date_Created.text = time_str
            Image = SubElement(Session, "Image")
            Image.text = str(Feature_Manager._ImagePath)
            DetectedFeatures = SubElement(Root, "DetectedFeatures")
@@ -294,4 +295,4 @@ class I2CWriter:
                        Y = SubElement(EndPoint, "Y")
                        Y.text = str(e.endPoint.y)
            tree = ET.ElementTree(Root)
-           tree.write(make_dir_root + "/" + time +".xml")
+           tree.write(make_dir_root + "/" + time_str +".I2C")
