@@ -478,8 +478,8 @@ class Cognition():
         if x < (imgWidth - scanRange) and y < (imgHeight - scanRange):
             for i in range(-scanRange, scanRange):
                for j in range(-scanRange, scanRange):
-                  xj = x + j
-                  yi = y + i
+                  xj = int(x + j)
+                  yi = int(y + i)
                   t = distImg[yi][xj]
                   thickness.append(t)
             t = max(thickness)
@@ -488,8 +488,8 @@ class Cognition():
                 t = 0
                 for i in scanRange:
                     for j in scanRange:
-                        xj = x + j
-                        yi = y + i
+                        xj = int(x + j)
+                        yi = int(y + i)
                         thick = distImg[yi][xj]
                         if round(thick) == 1:
                             t += 1

@@ -55,8 +55,8 @@ class ArrowHeadsFeature():
                 ar.ExtractArrowHead(ar, P1, P2, c)
                 ExtractedArrows.append(ar)
                 cv2.circle(img, (cx,cy), 1, (0,255,0), 1)
-
-        
+        make_dir_root = Feature_Manager._RootDirectory
+        cv2.imwrite(make_dir_root +"/Arrowheads_Extraction_Output.png",img)
         return ExtractedArrows, img
     
     

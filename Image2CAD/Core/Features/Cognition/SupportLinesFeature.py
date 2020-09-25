@@ -7,8 +7,10 @@
 
 import cv2
 from math import fabs
-import Core.Math
-from Core.Features.Cognition import Cognition
+from Core.Math.Point2 import Point2
+from Core.Math.Line2 import Line2
+from Core.Math.MathUtils import MathUtils
+from Core.Features.Cognition.Cognition import Cognition
 from Core.Features.LineSegments.SpecialLineSegments import SpecialLineSegments
 
 class SupportLinesFeature():
@@ -29,7 +31,7 @@ class SupportLinesFeature():
                 eLinePoints = []
                 for i in PointsBetweenLine:
                     t = Cognition.CheckThicknessInVicinity(i[0],i[1], dist_Img)
-                    pt = Math.Point2(i[0],i[1])
+                    pt = Point2(i[0],i[1])
                     if t is None:
                         continue
                     if t <= 0.6 * maxVal:           
@@ -45,10 +47,10 @@ class SupportLinesFeature():
                         p2 = sortSuppPts[i+1]
                         dist = p1.DistanceTo(p2)
                         if dist > 30:
-                            Supportlinesegment = Math.Line2(startsupportPt,p1)
+                            Supportlinesegment = Line2(startsupportPt,p1)
                             supportLinesegments.append(Supportlinesegment)
                             startsupportPt = p2
-                    Supportlinesegment = Math.Line2(startsupportPt,p2)
+                    Supportlinesegment = Line2(startsupportPt,p2)
                     supportLinesegments.append(Supportlinesegment)
                 if (len(sortEntPts)> 1):
                     startentityPt = sortEntPts[0]
@@ -59,11 +61,11 @@ class SupportLinesFeature():
                         p2 = sortEntPts[i+1]
                         dist = p1.DistanceTo(p2)
                         if dist > 2:         
-                            entitylinesegment = Math.Line2(startentityPt,p1)
+                            entitylinesegment = Line2(startentityPt,p1)
                             eline.append(entitylinesegment)
                             entityLinesegments.append(eline)
                             startentityPt = p2
-                    entitylinesegment = Math.Line2(startentityPt,p2)
+                    entitylinesegment = Line2(startentityPt,p2)
                     elines.append(entitylinesegment)
                     entityLinesegments.append(elines)
         for d in dimension:
@@ -80,7 +82,7 @@ class SupportLinesFeature():
                             if bbMin.x + 3 > ls.startPoint.x and fabs(ls.endPoint.x - ls.startPoint.x) < 3 and fabs(ls.endPoint.y - ls.startPoint.y) > 5 :
                                 shortListedLines.append(ls)   
                     for ls in shortListedLines:
-                            projectedPt = Math.MathUtils.ProjectToLine2(ls.startPoint, ls.endPoint, bbMin)
+                            projectedPt = MathUtils.ProjectToLine2(ls.startPoint, ls.endPoint, bbMin)
                             projectedDistance = bbMin.DistanceTo(projectedPt)
                             if projectedDistance < 8 :          #<7
                                 SupportLSW.append(ls)
@@ -92,7 +94,7 @@ class SupportLinesFeature():
                            if bbMax.x - 3 < ls.startPoint.x and fabs(ls.endPoint.x - ls.startPoint.x) < 3 and fabs(ls.endPoint.y - ls.startPoint.y) > 5:
                                shortListedLines.append(ls)
                    for ls in shortListedLines:
-                           projectedPt = Math.MathUtils.ProjectToLine2(ls.startPoint, ls.endPoint, bbMax)
+                           projectedPt = MathUtils.ProjectToLine2(ls.startPoint, ls.endPoint, bbMax)
                            projectedDistance = bbMax.DistanceTo(projectedPt)
                            if projectedDistance < 8 :    
                                SupportLSE.append(ls)
@@ -104,7 +106,7 @@ class SupportLinesFeature():
                             if bbMin.y + 3 > ls.startPoint.y and fabs(ls.endPoint.y - ls.startPoint.y) < 3 and fabs(ls.endPoint.x - ls.startPoint.x) > 5:
                                 shortListedLines.append(ls)
                     for ls in shortListedLines:
-                            projectedPt = Math.MathUtils.ProjectToLine2(ls.startPoint, ls.endPoint, bbMin)
+                            projectedPt = MathUtils.ProjectToLine2(ls.startPoint, ls.endPoint, bbMin)
                             projectedDistance = bbMin.DistanceTo(projectedPt)
                             if projectedDistance < 8 :     
                                 SupportLSN.append(ls)
@@ -116,7 +118,7 @@ class SupportLinesFeature():
                             if bbMax.y - 3 < ls.startPoint.y and fabs(ls.endPoint.y - ls.startPoint.y) < 3 and fabs(ls.endPoint.x - ls.startPoint.x) > 5:
                                 shortListedLines.append(ls)
                     for ls in shortListedLines:
-                            projectedPt = Math.MathUtils.ProjectToLine2(ls.startPoint, ls.endPoint, bbMax)
+                            projectedPt = MathUtils.ProjectToLine2(ls.startPoint, ls.endPoint, bbMax)
                             projectedDistance = bbMax.DistanceTo(projectedPt)
                             if projectedDistance < 8 :     
                                 SupportLSS.append(ls)
