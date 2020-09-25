@@ -57,7 +57,8 @@ CONTRIBUTERS:
 '''
 
 # CHANGE THIS IF TESSERACT IS NOT IN YOUR PATH, OR IS NAMED DIFFERENTLY
-tesseract_cmd = 'tesseract'
+tesseract_cmd = 'C:/Program Files (x86)/Tesseract-OCR/tesseract.exe'
+tessdata_dir_config = ' --tessdata-dir "C:/Program Files (x86)/Tesseract-OCR/tessdata"'
 
 try:
     import Image
@@ -154,6 +155,10 @@ def image_to_string(image, lang=None, boxes=False, config=None):
         output_file_name = '%s.box' % output_file_name_base
     try:
         image.save(input_file_name)
+        if config:
+            config += tessdata_dir_config
+        else:
+            config = tessdata_dir_config
         status, error_string = run_tesseract(input_file_name,
                                              output_file_name_base,
                                              lang=lang,

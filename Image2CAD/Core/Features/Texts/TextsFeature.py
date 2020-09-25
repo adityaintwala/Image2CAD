@@ -110,7 +110,7 @@ class TextsFeature:
         SortedLabels = {}
         for key, value in sorted(labels.items()):
             SortedLabels.setdefault(value, []).append(key)
-        for i in range(0,2):            #range(0,3) changed on 18-2-16
+        for i in range(0,2):            
             maxCCkey=max(SortedLabels, key=lambda k: len(SortedLabels[k]))
             SortedLabels.pop(maxCCkey)
         
@@ -128,7 +128,7 @@ class TextsFeature:
         rotate_img = ImgTransform.ImgAspectResize(rotate_img,800,800)
         output_img_path = make_dir_rotate + "/rotate" + str(i) + ".png"
         cv2.imwrite(output_img_path, rotate_img)
-        detected_text = pytesseract.image_to_string(Image.open(output_img_path), lang='eng+eng13', psm = '6')
+        detected_text = pytesseract.image_to_string(Image.open(output_img_path), config="-psm 6") #, lang='eng+eng13'
                
         return output_img_path, detected_text
     
