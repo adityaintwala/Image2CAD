@@ -102,7 +102,7 @@ class SpecialLineSegments:
     def sortPoints(points, line):
         sortedPointsDict = {}
         for p in points:
-          u = SpecialLineSegments.GetUParamLine(p,line)                  #
+          u = SpecialLineSegments.GetUParamLine(p,line)                 
           sortedPointsDict[u] = p
         keys = sortedPointsDict.keys()
         sortedKeys = sorted(keys)
@@ -221,14 +221,14 @@ class SpecialLineSegments:
                     line_pixel_array[ : , 1 ] = np.arange(p1y - 1 , p1y - absolute_vertical_projection - 1 , -1)
                 else:
                     line_pixel_array[ : , 1 ] = np.linspace(p1y + 1 , p1y + absolute_vertical_projection + 1, number)
-                line_pixel_array[ : , 0 ] = (slope * (line_pixel_array[ : , 1] - p1y)).astype(np.int) + p1x         #Based on eq of line between two points
+                line_pixel_array[ : , 0 ] = (slope * (line_pixel_array[ : , 1] - p1y)).astype(np.int) + p1x         
             else:
                 slope = vertical_projection.astype(np.float32) / horizontal_projection.astype(np.float32)
                 if negative_X:
                     line_pixel_array[ : , 0 ] = np.arange(p1x - 1 , p1x - absolute_horizontal_projection - 1 , -1)
                 else:
                     line_pixel_array[ : , 0] = np.linspace(p1x + 1, p1x + absolute_horizontal_projection + 1, num = number)
-                line_pixel_array[ : , 1] = (slope * (line_pixel_array[ : , 0] - p1x)).astype(np.int) + p1y          #Based on eq of line between two points
+                line_pixel_array[ : , 1] = (slope * (line_pixel_array[ : , 0] - p1x)).astype(np.int) + p1y          
 
         X_Coordinate_Array = line_pixel_array[ : , 0]
         Y_Coordinate_Array = line_pixel_array[ : , 1]
@@ -244,7 +244,7 @@ class SpecialLineSegments:
     
         for a in ArrowHeadsList:
             arrow_center = a._ArrowCenter
-            if fabs(int(arrow_center.x - center.x)) <= 5 and fabs(int(arrow_center.y - center.y)) <= 5:     # <=3 changed on 10-3-16 due to change in onLine threshold in Line DT Math3D
+            if fabs(int(arrow_center.x - center.x)) <= 5 and fabs(int(arrow_center.y - center.y)) <= 5:     
                 a._ArrowCenter = center
                 return a
         return None
@@ -289,12 +289,12 @@ class SpecialLineSegments:
                     onlinePointsPercentage = self.FindPercentageOfPointsOnLine(pointsOnLineBtnCorners)
                     if onlinePointsPercentage > 90:
                         newlineSegm = Line2(c1,c)
-                        if int(newlineSegm.Length()) > 8:                       #updated on 29-2-16
+                        if int(newlineSegm.Length()) > 8:                       
                             arrowHead = SpecialLineSegments.ReturnArrowHeads(c1)
                             if arrowHead is None:
                                 continue
-                            overlap = SpecialLineSegments.CheckArrowOverlap(arrowHead)       #Added on 29-2-16(to reduce Line between two arrowheads connection)
-                            if overlap == False:                                        #Added on 29-2-16(to reduce Line between two arrowheads connection)
+                            overlap = SpecialLineSegments.CheckArrowOverlap(arrowHead)       
+                            if overlap == False:                                        
                                 Dimensional_AH.append(arrowHead)
                                 Dimensional_LS.append(newlineSegm)
                                 DL = DimensionalLines()
@@ -341,7 +341,7 @@ class SpecialLineSegments:
               onlinePointsPercentage = self.FindPercentageOfPointsOnLine(pointsOnLineBtnCorners)
               if onlinePointsPercentage > 90:
                     newlineSegm = Line2(c1,c2)
-                    if int(newlineSegm.Length()) > 6:           #Updated on 18-2-16
+                    if int(newlineSegm.Length()) > 6:           
                         detectedLineSegments.append(newlineSegm)
        else:
 
@@ -354,6 +354,6 @@ class SpecialLineSegments:
                     onlinePointsPercentage = self.FindPercentageOfPointsOnLine(pointsOnLineBtnCorners)
                     if onlinePointsPercentage > 90:
                         newlineSegm = Line2(c1,c2)
-                        if int(newlineSegm.Length()) > 6:           #Updated on 18-2-16
+                        if int(newlineSegm.Length()) > 6:           
                             detectedLineSegments.append(newlineSegm)
        return detectedLineSegments

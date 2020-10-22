@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 22 18:16:34 2020
 
 @author: Aditya Intwala
 """
@@ -95,7 +94,7 @@ class Cognition():
         if (MathUtils.EQTF(denominator, 0.0, tolerance)):
             if(MathUtils.EQTF(numeratorB, 0.0, tolerance) and MathUtils.EQTF(numeratorA, 0.0, tolerance)):
                 return Cognition.CheckForCoincidentLineSegments(p1, p2, p3, p4)
-            return False                 #False..but to check for Boundingbox touching we changed it to True.
+            return False                 
         ua = numeratorA / denominator
         ub = numeratorB / denominator
 

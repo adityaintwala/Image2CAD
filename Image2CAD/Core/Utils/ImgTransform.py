@@ -50,7 +50,7 @@ class ImgTransform():
             img_center = (diagonal/2, diagonal/2)
        
             rotateMatrix = cv2.getRotationMatrix2D(img_center, angle, scale)
-            rot_img[X_offset:(X_offset + rows), Y_offset:(Y_offset + cols)] = img        #For Color Image
+            rot_img[X_offset:(X_offset + rows), Y_offset:(Y_offset + cols)] = img        
             rot_img = cv2.warpAffine(rot_img, rotateMatrix, (diagonal, diagonal), flags = cv2.INTER_LINEAR, borderMode = cv2.BORDER_CONSTANT,borderValue = (255,255,255))
        
         return rot_img

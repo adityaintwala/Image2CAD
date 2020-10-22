@@ -82,17 +82,6 @@ class Point2:
             return True
         return False
 
-    #def ToPoint3(self):
-    #    return Point3(self.x , self.y , 0)
-
-    # @staticmethod
-    # def CalculateInnerAngleDeg( pointBefore, basePoint, pointAfter):
-    #     p1 = Point2.ToPoint3(pointBefore)
-    #     p2 = Point2.ToPoint3(basePoint)
-    #     p3 = Point2.ToPoint3(pointAfter)
-    #     return MathUtils.MathUtils.CalculateInnerAngleDeg(p1, p2, p3)
-
-
     @staticmethod
     def ProjectToLine( p1, p2, p):
         v1 = (p2 - p1)
