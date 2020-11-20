@@ -33,10 +33,39 @@ The output of the script would be multiple files:
 * *.I2C - A custom Image2CAD file conatining extracted and corelated feature information which than can be processed to DXF file.
 * *.png - Multiple output images of various individual feature detected.
 
-## Arrow Detection
+## Arrowhead Feature Detection
 Input Image  |  Detected Arrowheads Output Image 
 :------------------:|:--------------------:
 ![Input Image](/TestData/1.png)  |  ![Detected Arrowheads Output Image](/TestData/Output/1/20201120-093555/Arrowheads_Extraction_Output.png)
-![Input Image](/TestData/2.png)  |  ![Detected Arrowheads Output Image](/TestData/Output/2/20201120-093813/Arrowheads_Extraction_Output.png)
-![Input Image](/TestData/3.png)  |  ![Detected Arrowheads Output Image](/TestData/Output/3/20201120-093906/Arrowheads_Extraction_Output.png)
-![Input Image](/TestData/4.png)  |  ![Detected Arrowheads Output Image](/TestData/Output/4/20201120-093947/Arrowheads_Extraction_Output.png)
+![Input Image](/TestData/2.PNG)  |  ![Detected Arrowheads Output Image](/TestData/Output/2/20201120-093813/Arrowheads_Extraction_Output.png)
+![Input Image](/TestData/3.PNG)  |  ![Detected Arrowheads Output Image](/TestData/Output/3/20201120-093906/Arrowheads_Extraction_Output.png)
+![Input Image](/TestData/4.PNG)  |  ![Detected Arrowheads Output Image](/TestData/Output/4/20201120-093947/Arrowheads_Extraction_Output.png)
+
+## Dimensional Line Feature Detection
+Input Image  |  Detected Dimensional Lines Output Image 
+:------------------:|:--------------------:
+![Input Image](/TestData/1.png)  |  ![Detected Dimensional Lines Output Image](/TestData/Output/1/20201120-093555/DimensionalLine_Extraction_Output.png)
+![Input Image](/TestData/2.PNG)  |  ![Detected Dimensional Lines Output Image](/TestData/Output/2/20201120-093813/DimensionalLine_Extraction_Output.png)
+![Input Image](/TestData/3.PNG)  |  ![Detected Dimensional Lines Output Image](/TestData/Output/3/20201120-093906/DimensionalLine_Extraction_Output.png)
+![Input Image](/TestData/4.PNG)  |  ![Detected Dimensional Lines Output Image](/TestData/Output/4/20201120-093947/DimensionalLine_Extraction_Output.png)
+
+## Dimensional Text Feature Detection
+Input Image  |  Detected Dimensional Text Output Image 
+:------------------:|:--------------------:
+![Input Image](/TestData/1.png)  |  ![Detected Dimensional Text Output Image](/TestData/Output/1/20201120-093555/Text_Extraction_Output.png)
+![Input Image](/TestData/2.PNG)  |  ![Detected Dimensional Text Output Image](/TestData/Output/2/20201120-093813/Text_Extraction_Output.png)
+![Input Image](/TestData/3.PNG)  |  ![Detected Dimensional Text Output Image](/TestData/Output/3/20201120-093906/Text_Extraction_Output.png)
+![Input Image](/TestData/4.PNG)  |  ![Detected Dimensional Text Output Image](/TestData/Output/4/20201120-093947/Text_Extraction_Output.png)
+
+## Line Feature Detection
+Input Image  |  Detected Lines Output Image 
+:------------------:|:--------------------:
+![Input Image](/TestData/1.png)  |  ![Detected Lines Output Image](/TestData/Output/1/20201120-093555/Line_Extraction_Output.png)
+![Input Image](/TestData/2.PNG)  |  ![Detected Lines Output Image](/TestData/Output/2/20201120-093813/Line_Extraction_Output.png)
+![Input Image](/TestData/3.PNG)  |  ![Detected Lines Output Image](/TestData/Output/3/20201120-093906/Line_Extraction_Output.png)
+![Input Image](/TestData/4.PNG)  |  ![Detected Lines Output Image](/TestData/Output/4/20201120-093947/Line_Extraction_Output.png)
+
+## Circle Feature Detection
+Input Image  |  Detected Circles Output Image 
+:------------------:|:--------------------:
+![Input Image](/TestData/1.png)  |  ![Detected Circles Output Image](/TestData/Output/1/20201120-093555/Circle_Extraction_Output.png)
