@@ -1,5 +1,5 @@
 # Image2CAD
-A prototype application to translate a raster image of CAD drawing to user editable DXF CAD format, using concepts of image processing and Machine Learning. This is based on the paper [Image to CAD: Feature Extraction and Translation of Raster Image of CAD Drawing to DXF CAD Format](/Paper/Image2CAD_AdityaIntwala_CVIP2019.pdf) by Aditya Intwala.
+A prototype application to translate a raster image of CAD drawing to user editable DXF CAD format, using concepts of Image Processing and Machine Learning. This is based on the paper [Image to CAD: Feature Extraction and Translation of Raster Image of CAD Drawing to DXF CAD Format](/Paper/Image2CAD_AdityaIntwala_CVIP2019.pdf) by Aditya Intwala.
 
 The idea is to make the open-sourced version more robust and accurate with integrating the Machine Learning models for the individual stages of current pipeline similar to original version but more accurate and robust with the help of collaboration.
 
@@ -69,3 +69,6 @@ Input Image  |  Detected Lines Output Image
 Input Image  |  Detected Circles Output Image 
 :------------------:|:--------------------:
 ![Input Image](/TestData/1.png)  |  ![Detected Circles Output Image](/TestData/Output/1/20201120-093555/Circle_Extraction_Output.png)
+
+## Contribution Guidelines
+Please get in touch with the author for contribution related queries.
