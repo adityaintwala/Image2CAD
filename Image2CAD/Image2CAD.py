@@ -31,6 +31,7 @@ def main(argv1):
     from Core.Features.FeatureManager import FeatureManager
     from Core.Utils.Eraser import Eraser
     from Core.Utils.I2CWriter import I2CWriter
+    from Core.Utils.DXFWriter import DXFWriter
     
     timestr = time.strftime("%Y%m%d-%H%M%S")
     Start_time = time.strftime("%H hr - %M min - %S sec")
@@ -165,8 +166,16 @@ def main(argv1):
     print("Exporting Extracted Data to I2C File...")
     I2CWriter.Write(FM)
     print("Exporting Complete...")
+    
+    print("Exporting Extracted Data to DXF File...")
+    DXFWriter.Write(FM)
+    print("Exporting Complete...")
+    
     print("Image2CAD Script Execution Complete...")
 
+
+#if __name__ == "__main__":
+#    main("Debug")
     
 if __name__ == "__main__":
     main(sys.argv[1])
