@@ -17,6 +17,8 @@ Please cite the below research if using as is or with any modification in your r
   organization={Springer}
 }
 ```
+## Contribution Guidelines
+Please get in touch with the author for contribution related queries.
 
 ## Introduction
 A CAD drawing has various drawing features like entity lines, dimensional lines, dimensional arrows, dimensional text, support lines, reference lines, Circles, GD&T symbols and drawing information metadata. The problem of automated or semi-automated recognition of feature entities from 2D CAD drawings in the form of raster images has multiple usages in various scenarios. The present research work explores the ways to extract this information about the entities from 2D CAD drawings raster images and to set up a workflow to do it in automated or semi-automated way. The algorithms and workflow have been tested and refined using a set of test CAD images which are fairly representative of the CAD drawings encountered in practice. The overall success rate of the proposed process is 90% in fully automated mode for the given sample of the test images. The prototype is used to generate user editable DXF CAD file from raster images of CAD drawings which could be then used to update/edit the CAD model when required using CAD packages. The current work is a stripped-down version of original work presented in paper; this might not reproduce same results as the paper but the workflow is highly relatable to the original pipeline. The stripped-down version has not got the generalization, robustness or the stability of the original version. 
@@ -70,5 +72,9 @@ Input Image  |  Detected Circles Output Image
 :------------------:|:--------------------:
 ![Input Image](/TestData/1.png)  |  ![Detected Circles Output Image](/TestData/Output/1/20201120-093555/Circle_Extraction_Output.png)
 
-## Contribution Guidelines
-Please get in touch with the author for contribution related queries.
+## Major Dependencies
+* OpenCV 3.4.2
+* TessaractOCR 
+* ezdxf
+* numpy
+* scipy
