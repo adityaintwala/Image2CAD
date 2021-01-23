@@ -5,6 +5,10 @@ The idea is to make the open-sourced version more robust and accurate with integ
 
 The opensourced version is slightly different than what is presented in the paper. The OCR in original version was hand tailored for Mechanical drawings fonts and GD&T symbols which was more accurate than present Tessaract OCR. This version is based on OpenCV 3.0 while original was based on OpenCV 2.0.
 
+## Demo Video
+[![Image 2 CAD Demo](/Paper/Image2CAD.gif)](https://youtu.be/Isxtcwe57cc)
+
+
 ## Cite
 Please cite the below research if using as is or with any modification in your research.
 ```
