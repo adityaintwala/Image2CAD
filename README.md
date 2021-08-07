@@ -1,4 +1,6 @@
 # Image2CAD
+Copyright (C) 2016, Aditya Intwala.
+
 A prototype application to translate a raster image of CAD drawing to user editable DXF CAD format, using concepts of Image Processing and Machine Learning. This is based on the paper [Image to CAD: Feature Extraction and Translation of Raster Image of CAD Drawing to DXF CAD Format](/Paper/Image2CAD_AdityaIntwala_CVIP2019.pdf) by Aditya Intwala.
 
 The idea is to make the open-sourced version more robust and accurate with integrating the Machine Learning models for the individual stages of current pipeline similar to original version but more accurate and robust with the help of collaboration.
